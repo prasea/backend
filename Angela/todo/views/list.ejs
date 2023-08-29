@@ -11,24 +11,24 @@
   <body>
     <div class="box" id="heading">
       <h1>
-        <%= locals.todaysDay %>
+        <%= listTitle %>
       </h1>
     </div>
     <h2>
       <%= locals.errorMessage %>
     </h2>
     <div class="box">
-      <% todoTasks.forEach(todoTask=> { %>
+      <% tasks.forEach(task=> { %>
         <div class="item">
           <input type="checkbox" name="" id="">
           <p>
-            <%=todoTask %>
+            <%=task%>
           </p>
         </div>
         <% }) %>
           <form class="item" action="/" method="post">
             <input type="text" name="task" placeholder="New Task">
-            <button class="addBtn" type="submit">+</button>
+            <button class="addBtn" type="submit" name="button" value="<%=listTitle%>">+</button>
           </form>
     </div>
 

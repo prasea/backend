@@ -7,6 +7,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 const todoTasks = [];
+const todoWorkTasks = [];
 const formattedDate = () => {
   const today = new Date();
   const options = {
@@ -18,23 +19,29 @@ const formattedDate = () => {
 }
 
 app.get('/', (req, res) => {
-
-
   res.render('list', {
-    todaysDay: formattedDate(),
-    todoTasks
+    listTitle: formattedDate(),
+    tasks: todoTasks
   });
 })
 app.get('/error', (req, res) => {
   res.redirect('/');
 })
+app.get('/work', (req, res) => {
+  res.render("list", { listTitle: "Work", tasks: todoWorkTasks })
+})
 app.post('/', (req, res) => {
   const newTask = req.body.task;
-  if (newTask === "") {
+  if (newTask === "")
     res.render('error');
+  if (req.body.button === "Work") {
+    todoWorkTasks.push(newTask);
+    res.redirect('/work');
   } else {
     todoTasks.push(req.body.task);
+    res.redirect('/');
   }
-  res.redirect('/')
+
+
 })
 app.listen(3000, () => console.log("TODO App Listening on Port 3000"));
