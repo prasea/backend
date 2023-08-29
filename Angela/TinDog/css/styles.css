@@ -1,0 +1,130 @@
+body{
+  font-family: 'Montserrat';
+}
+#title h1{
+  font-family: 'Montserrat-Black', sans-serif;
+  font-size: 4rem;
+  line-height: 1.2;
+}
+#title{
+  background-color: #ff4c68;
+  color: #fff;
+}
+#title .container-fluid{
+  padding: 3% 15% 8%;
+}
+#title .navbar{
+  padding: 0 0 4.5rem;
+}
+#title .navbar-brand{
+  font-size: 2.5rem;
+  font-weight: bold;
+  font-family: "Ubuntu";
+}
+#title .nav-item{
+  padding: 0 1rem;
+}
+#title .nav-link{
+  font-size: 1.2rem;
+  font-family: 'Montserrat-Light';
+}
+#title .btn-download{
+  margin: 0.3rem .8rem;
+}
+.showcase-img{
+  width: 60%;
+  transform: rotate(25deg);
+  position: absolute;
+  right: 3rem;
+}
+#features{
+  padding: 4rem;
+  text-align: center;
+  background-color: #fff;
+  position: relative;
+  z-index: 1;
+}
+#features h3{
+  font-family: 'Montserrat-Bold';
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 1rem 0 ;
+}
+#features p{
+  color: #8f8f8f;
+}
+#features i{
+  color: #ef8172;
+}
+#features i:hover{
+  color: #ff4c68;
+}
+
+#testimonials{
+  background-color: #ef8172;
+  text-align: center;
+  color: #fff; 
+}
+#testimonials .carousel-item{
+  padding: 5% 10%;
+}
+#testimonials h2{
+  font-family: 'Montserrat-Bold';
+  font-size: 3rem;
+  line-height: 1.5;
+}
+#testimonials img{
+  width: 20%;
+  border-radius: 100%;
+  margin: 2rem;
+}
+#press{
+  background-color: #ef8172;
+  text-align: center;
+  padding-bottom: 2rem;
+}
+#press .press-img{
+  width: 15%;
+  margin: 1rem;
+}
+#pricing{
+  text-align: center;
+  padding: 100px;
+}
+#pricing .row{
+  padding: 2% 3%;
+}
+
+@media (max-width : 1032px){
+  #title{
+    text-align: center;
+  }
+  .showcase-img{
+    position: static;
+    transform: rotate(0);
+    width: 40%;
+  }
+}
+#cta{
+  background-color: #ff4c68;
+  text-align: center;
+  color: #fff;
+  padding: 4rem 1rem;
+}
+#cta h3{
+  font-family: 'Montserrat-Black';
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+}
+#footer{
+  background-color: #fff;
+  padding: 2rem 1rem;
+  text-align: center;
+}
+.footer-icons{
+  margin: 1rem;
+}
+.footer-icons i{
+  margin-left: 1rem;
+}
