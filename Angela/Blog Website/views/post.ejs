@@ -1,0 +1,20 @@
+<%- include('partials/header') -%>
+  <h1>
+    <%= title %>
+  </h1>
+  <p>
+    <%=body %>
+  </p>
+  <div class="row">
+    <div class="col col-sm-12 col-lg-6">
+      <a href="/update?id=<%=id%>" class="btn btn-warning btn-lg">Update</a>
+    </div>
+    <div class="col col-sm-12 col-lg-6 text-right">
+      <form action="/delete" method="post">
+        <input type="hidden" name="postId" value="<%= id %>">
+        <button class="btn btn-danger btn-lg" type="submit">Delete</button>
+      </form>
+    </div>
+  </div>
+
+  <%- include('partials/footer') -%>
