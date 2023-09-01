@@ -1,0 +1,29 @@
+<%- include('header'); -%>
+  <div class="box" id="heading">
+    <h1>
+      <%= listTitle %>
+    </h1>
+  </div>
+  <h2>
+    <%= locals.errorMessage %>
+  </h2>
+
+  <!-- Displaying the Tasks -->
+  <div class="box">
+    <% tasks.forEach(task=> { %>
+      <form action="/delete" method="post">
+        <div class="item">
+          <input type="checkbox" onChange="this.form.submit()" name="checked" value="<%= task._id %>">
+          <p>
+            <%=task.taskName%>
+          </p>
+      </form>
+  </div>
+  <% }) %>
+    <!-- Submitting the Tasks -->
+    <form class="item" action="/" method="post">
+      <input type="text" name="task" placeholder="New Task">
+      <button class="addBtn" type="submit" name="button" value="<%=listTitle%>">+</button>
+    </form>
+    </div>
+    <%- include('footer'); -%>
