@@ -2,6 +2,15 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
+const formattedDate = () => {
+  const today = new Date();
+  const options = {
+    day: "numeric",
+    weekday: "long",
+    month: "long"
+  }
+  return today.toLocaleDateString("en-US", options);
+}
 
 
 const app = express()
@@ -21,32 +30,22 @@ const taskSchema = new mongoose.Schema({
   taskName: String
 })
 const Task = mongoose.model('Task', taskSchema);
-const formattedDate = () => {
-  const today = new Date();
-  const options = {
-    day: "numeric",
-    weekday: "long",
-    month: "long"
-  }
-  return today.toLocaleDateString("en-US", options);
-}
-const createDocument = async () => {
-  try {
-    const task1 = new Task({ taskName: "Buy Food" })
-    const task2 = new Task({ taskName: "Cook Food" })
-    const task3 = new Task({ taskName: "Eat Food" })
-    await Task.insertMany([task1, task2, task3])
-    console.log("Sucessfully inserted 3 tasks");
-  } catch (err) {
-    console.log(err);
-  }
-}
+const listSchema = new mongoose.Schema({
+  name: String,
+  tasks: [taskSchema]
+})
+const List = mongoose.model("List", listSchema);
+
+const task1 = new Task({ taskName: "Buy Food" })
+const task2 = new Task({ taskName: "Cook Food" })
+const task3 = new Task({ taskName: "Eat Food" })
+const defaultTasks = [task1, task2, task3];
 
 
 app.get('/', async (req, res) => {
   const todoTasks = await Task.find({});
   if (todoTasks.length === 0) {
-    createDocument();
+    await Task.insertMany(defaultTasks);
     return res.redirect('/');
   }
   res.render('list', {
@@ -57,8 +56,24 @@ app.get('/', async (req, res) => {
 app.get('/error', (req, res) => {
   res.redirect('/');
 })
-app.get('/work', (req, res) => {
-  res.render("list", { listTitle: "Work", tasks: todoWorkTasks })
+app.get('/:type', async (req, res) => {
+  const customTodoName = req.params.type;
+  // Check if the List with name=type already exists. 
+  const foundList = await List.findOne({ name: customTodoName }).exec();
+  if (!foundList) {
+    // Create a new List
+    const newList = await List.create({
+      name: customTodoName,
+      tasks: defaultTasks
+    });
+    res.redirect('/' + newList.name);
+  } else {
+    // Show an exisiting List
+    res.render('list', {
+      listTitle: foundList.name,
+      tasks: foundList.tasks
+    });
+  }
 })
 app.post('/', async (req, res) => {
   const newTask = req.body.task;
