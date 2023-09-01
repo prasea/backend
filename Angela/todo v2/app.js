@@ -76,16 +76,35 @@ app.get('/:type', async (req, res) => {
   }
 })
 app.post('/', async (req, res) => {
-  const newTask = req.body.task;
-  if (newTask === "") {
+  const taskName = req.body.task;
+  const listName = req.body.listType;
+  const userSubmittedTask = new Task({ taskName });
+  if (taskName === "") {
     return res.render('error');
   }
-  await Task.create({ taskName: newTask })
-  res.redirect('/');
+  if (listName === formattedDate()) {
+    userSubmittedTask.save();
+    return res.redirect('/');
+  } else {
+    const foundList = await List.findOne({ name: listName });
+    foundList.tasks.push(userSubmittedTask);
+    foundList.save();
+    return res.redirect('/' + listName)
+  }
+
 })
 app.post('/delete', async (req, res) => {
-  const deletedTask = await Task.findByIdAndRemove(req.body.checked);
-  console.log(deletedTask)
-  res.redirect('/')
+  const listName = req.body.listType;
+  const checkedItemId = req.body.checked;
+  if (listName === formattedDate()) {
+    const deletedTask = await Task.findByIdAndRemove(checkedItemId);
+    console.log(deletedTask)
+    res.redirect('/')
+  } else {
+    const listDocs = await List.findOne({ name: listName }).exec();
+    const updatedTasks = listDocs.tasks.filter(task => (task._id).valueOf() != checkedItemId);
+    await List.updateOne({ name: listName }, { tasks: updatedTasks });
+    res.redirect('/' + listName);
+  }
 })
 app.listen(3000, () => console.log("TODO App Listening on Port 3000"));

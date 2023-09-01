@@ -17,13 +17,14 @@
           <p>
             <%=task.taskName%>
           </p>
+          <input type="hidden" name="listType" value="<%= listTitle %>">
       </form>
   </div>
   <% }) %>
     <!-- Submitting the Tasks -->
     <form class="item" action="/" method="post">
       <input type="text" name="task" placeholder="New Task">
-      <button class="addBtn" type="submit" name="button" value="<%=listTitle%>">+</button>
+      <button class="addBtn" type="submit" name="listType" value="<%=listTitle%>">+</button>
     </form>
     </div>
     <%- include('footer'); -%>
