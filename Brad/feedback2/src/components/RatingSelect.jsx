@@ -2,11 +2,13 @@ import React, {useState, useContext, useEffect} from 'react'
 import FeedbackContext from '../context/FeedbackContext';
 
 function RatingSelect({select}) {
+  //To update the rating when edit icon is clicked
   const {editItem} = useContext(FeedbackContext);
   useEffect(() => {
     if(editItem.edit === true)
     setSelected(editItem.item.rating)
   }, [editItem])
+  
   const [selected, setSelected] = useState(10);
   const handleChange = (e) => {
     setSelected(+e.target.value)

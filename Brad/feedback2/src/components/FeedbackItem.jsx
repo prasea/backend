@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react'
+import React, {useContext} from 'react'
 import {FaTimes, FaEdit} from 'react-icons/fa'
 import Card from './shared/Card'
 import FeedbackContext from '../context/FeedbackContext'
