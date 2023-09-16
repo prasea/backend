@@ -1,10 +1,10 @@
-import React, {useState, useContext} from 'react'
+import React, {useState, useContext, useEffect} from 'react'
 import Card from './shared/Card'
 import Button from './shared/Button';
 import RatingSelect from './RatingSelect';
 import FeedbackContext from '../context/FeedbackContext';
 function FeedbackForm() {
-  const {feedbackAdd} = useContext(FeedbackContext);
+  const {feedbackAdd, editItem} = useContext(FeedbackContext);
   const [text, setText] = useState('');  
   const [rating, setRating] = useState(10);  
   const [btnDisabled, setBtnDisabled] = useState(true)
@@ -32,6 +32,13 @@ const handleSubmit = (e) => {
   }
   e.preventDefault();
 }
+useEffect(() => {
+  if(editItem.edit === true){
+    setBtnDisabled(false);
+    setText(editItem.item.text);
+    setRating(editItem.item.rating);
+  }
+}, [editItem]);
   return (
     <Card>
       <form onSubmit={handleSubmit}>
@@ -39,7 +46,7 @@ const handleSubmit = (e) => {
         {/* TODO : Rating select component */}
         <RatingSelect select={rating => setRating(rating)}/>
         <div className="input-group">
-          <input onChange={handleTextChange} type="text" placeholder='Write a review'/>
+          <input onChange={handleTextChange} type="text" placeholder='Write a review' value={text}/>
           <Button type="submit" version="primary" isDisabled={btnDisabled}>Send</Button>
         </div>
         {validationMessage && <div className="message">{validationMessage}</div>}
